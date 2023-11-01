@@ -4,11 +4,21 @@ const EmbedTube = () => {
   const [entered, setEntered] = useState(false);
   const [vidId, setVidId] = useState("");
   const [url, setUrl] = useState("");
+  const [musicView, setMusicView] = useState(false);
 
   const handleSubmit = () => {
     setVidId(url.split("?v=")[1]);
     setEntered(true);
+    setMusicView(false);
   };
+
+  /*const handleMusic = () => {
+    if (musicView) {
+      setMusicView(false);
+    } else {
+      setMusicView(true);
+    }
+  };*/
 
   const handleReset = () => {
     setEntered(false);
@@ -31,15 +41,22 @@ const EmbedTube = () => {
       )}
       {entered && (
         <div id="vid-box" className={`contain ${!entered && "hidden"}`}>
-          <iframe
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${vidId}?modestbranding=1&rel=0&iv_load_policy=3&color=white`}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          ></iframe>
+          <div className={`vid-container ${musicView ? "hidden" : ""}`}>
+            <iframe
+              src={`https://www.youtube.com/embed/${vidId}?modestbranding=1&rel=0&iv_load_policy=3&color=white`}
+              title="YouTube video player"
+              className={`${musicView ? "hidden" : ""}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
           <button onClick={handleReset}>New Video</button>
+          {/*<button
+            onClick={handleMusic}
+            className={`${!musicView ? "deselect" : "selected"}`}
+          >
+            Music Only
+      </button>*/}
         </div>
       )}
     </div>
