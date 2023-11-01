@@ -9,7 +9,11 @@ const EmbedTube = () => {
   const [minimal, setMinimal] = useState(false);
 
   const handleSubmit = () => {
-    setVidId(url.split("?v=")[1].split("&")[0]);
+    let split_chars = "?v=";
+    if (/youtu.be/.test(url)) {
+      split_chars = ".be/";
+    }
+    setVidId(url.split(split_chars)[1].split("&")[0]);
     setEntered(true);
     setMusicView(false);
     setMinimal(false);
