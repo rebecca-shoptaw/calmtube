@@ -5,11 +5,20 @@ const EmbedTube = () => {
   const [vidId, setVidId] = useState("");
   const [url, setUrl] = useState("");
   const [musicView, setMusicView] = useState(false);
+  const [mode, setMode] = useState("light");
 
   const handleSubmit = () => {
     setVidId(url.split("?v=")[1]);
     setEntered(true);
     setMusicView(false);
+  };
+
+  const toggleMode = () => {
+    if (mode == "light") {
+      setMode("dark");
+    } else {
+      setMode("light");
+    }
   };
 
   /*const handleMusic = () => {
@@ -27,7 +36,8 @@ const EmbedTube = () => {
   };
 
   return (
-    <div>
+    <div id="page" className={`${mode == "dark" ? "dark" : "light"}`}>
+      <i className="bi bi-highlights" onClick={toggleMode} />
       {!entered && (
         <div id="submit-view" className={`contain ${entered && "hidden"}`}>
           <input
