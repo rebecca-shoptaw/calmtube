@@ -5,19 +5,27 @@ const EmbedTube = () => {
   const [vidId, setVidId] = useState("");
   const [url, setUrl] = useState("");
   const [musicView, setMusicView] = useState(false);
-  const [mode, setMode] = useState("light");
+  const [darkMode, setDarkMode] = useState(false);
+  const [minimal, setMinimal] = useState(false);
 
   const handleSubmit = () => {
-    setVidId(url.split("?v=")[1]);
+    setVidId(url.split("?v=")[1].split("&")[0]);
     setEntered(true);
     setMusicView(false);
+    setMinimal(false);
   };
 
-  const toggleMode = () => {
-    if (mode == "light") {
-      setMode("dark");
+  const toggleMode = (type: string) => {
+    let setFunc = setDarkMode;
+    let state_var = darkMode;
+    if (type == "minimal") {
+      setFunc = setMinimal;
+      state_var = minimal;
+    }
+    if (state_var) {
+      setFunc(false);
     } else {
-      setMode("light");
+      setFunc(true);
     }
   };
 
@@ -36,8 +44,26 @@ const EmbedTube = () => {
   };
 
   return (
-    <div id="page" className={`${mode == "dark" ? "dark" : "light"}`}>
-      <i className="bi bi-highlights" onClick={toggleMode} />
+    <div id="page" className={`${darkMode ? "dark" : "light"}`}>
+      <i
+        className="bi bi-highlights"
+        title="Light/Dark Mode"
+        onClick={() => {
+          toggleMode("color");
+        }}
+      />
+      <i
+        className="bi bi-noise-reduction"
+        title="Minimal Mode"
+        onClick={() => {
+          toggleMode("minimal");
+        }}
+      />
+      <i
+        className="bi bi-highlights"
+        title="Light/Dark Mode"
+        onClick={() => toggleMode("color")}
+      />
       {!entered && (
         <div id="submit-view" className={`contain ${entered && "hidden"}`}>
           <input
@@ -60,7 +86,12 @@ const EmbedTube = () => {
               allowFullScreen
             ></iframe>
           </div>
-          <button onClick={handleReset}>New Video</button>
+          <button
+            onClick={handleReset}
+            className={`${minimal ? "hidden" : ""}`}
+          >
+            New Video
+          </button>
           {/*<button
             onClick={handleMusic}
             className={`${!musicView ? "deselect" : "selected"}`}

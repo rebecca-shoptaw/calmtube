@@ -48,7 +48,14 @@ i {
   color: #444;
   position: absolute;
   top: 20px;
+}
+
+.bi-highlights {
   right: 20px;
+}
+
+.bi-noise-reduction {
+  right: 50px;
 }
 
 i:hover {
