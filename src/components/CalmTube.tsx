@@ -19,7 +19,7 @@ const CalmTube = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [minimal, setMinimal] = useState(false);
 
-  const API_KEY = import.meta.env.VITE_API_KEY;
+  const API_KEY = import.meta.env.VITE_API_BACKUP_KEY;
 
   const handleSubmit = () => {
     setEntered(true);
