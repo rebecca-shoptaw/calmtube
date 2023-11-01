@@ -19,7 +19,7 @@ const EmbedTube = () => {
   return (
     <div>
       {!entered && (
-        <div id="submit-view" className="contain">
+        <div id="submit-view" className={`contain ${entered && "hidden"}`}>
           <input
             id="vid-url"
             placeholder="url"
@@ -30,11 +30,11 @@ const EmbedTube = () => {
         </div>
       )}
       {entered && (
-        <div id="vid-box" className="contain">
+        <div id="vid-box" className={`contain ${!entered && "hidden"}`}>
           <iframe
             width="560"
             height="315"
-            src={`https://www.youtube.com/embed/${vidId}`}
+            src={`https://www.youtube.com/embed/${vidId}?modestbranding=1&rel=0&iv_load_policy=3&color=white`}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
