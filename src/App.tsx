@@ -1,10 +1,9 @@
-import "./App.css";
-import EmbedTube from "./components/EmbedTube";
+import CalmTube from "./components/CalmTube";
 
 function App() {
   return (
     <>
-      <EmbedTube />
+      <CalmTube />
     </>
   );
 }
