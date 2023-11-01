@@ -1,7 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import config from "./config.tsx";
-//import { ClipLoader } from "react-spinners";
 
 const CalmTube = () => {
   const [entered, setEntered] = useState(false);
@@ -21,7 +19,7 @@ const CalmTube = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [minimal, setMinimal] = useState(false);
 
-  const API_KEY = config.secure_api_key;
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   const handleSubmit = () => {
     setEntered(true);
@@ -34,7 +32,9 @@ const CalmTube = () => {
       setVidId(submission.split(split_chars)[1].split("&")[0]);
       setWatching(true);
     } else {
-      searchTube(API_KEY, submission);
+      if (API_KEY) {
+        searchTube(API_KEY, submission);
+      }
     }
   };
 
@@ -168,12 +168,6 @@ const CalmTube = () => {
               allowFullScreen
             ></iframe>
           </div>
-          <button
-            onClick={handleReset}
-            className={`${minimal ? "hidden" : ""}`}
-          >
-            New Video
-          </button>
           {/*<button
             onClick={handleMusic}
             className={`${!musicView ? "deselect" : "selected"}`}
