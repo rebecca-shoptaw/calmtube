@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { AxiosResponse, AxiosError } from "axios";
 
 const CalmTube = () => {
   const [entered, setEntered] = useState(false);
@@ -19,7 +20,11 @@ const CalmTube = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [minimal, setMinimal] = useState(false);
 
-  const API_KEY = import.meta.env.VITE_API_BACKUP_KEY;
+  let API_KEY = import.meta.env.VITE_API_KEY;
+
+  window.onload =() => {
+    
+  }
 
   const handleSubmit = () => {
     setEntered(true);
@@ -32,9 +37,7 @@ const CalmTube = () => {
       setVidId(submission.split(split_chars)[1].split("&")[0]);
       setWatching(true);
     } else {
-      if (API_KEY) {
-        searchTube(API_KEY, submission);
-      }
+      searchTube(API_KEY, submission);
     }
   };
 
@@ -48,7 +51,7 @@ const CalmTube = () => {
       .get(
         `https://www.googleapis.com/youtube/v3/search?key=${key}&type=video&part=snippet&maxResults=20&q=${search}`
       )
-      .then((res) => {
+      .then((res: AxiosResponse) => {
         setSearchResults(
           res.data.items.map(
             (vid: { snippet: any; id: { videoId: string } }) => {
@@ -65,7 +68,18 @@ const CalmTube = () => {
           )
         );
       })
-      .catch((err) => console.log(err));
+      .catch((err: AxiosError) => {
+        if (
+          err.code == "OVER_QUERY_LIMIT" ||
+          err.code == "RESOURCE_EXHAUSTE" ||
+          err.code == "quotaExceeded"
+        ) {
+          API_KEY = import.meta.env.VITE_BACKUP_API_KEY;
+          searchTube(API_KEY, submission);
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   const toggleMode = (type: string) => {
