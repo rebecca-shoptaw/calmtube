@@ -22,9 +22,14 @@ const CalmTube = () => {
 
   let API_KEY = import.meta.env.VITE_API_KEY;
 
-  window.onload =() => {
-    
-  }
+  window.onload = () => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key == "Enter" && !watching) {
+        e.preventDefault();
+        document.getElementById("submit-btn")?.click();
+      }
+    });
+  };
 
   const handleSubmit = () => {
     setEntered(true);
@@ -146,7 +151,9 @@ const CalmTube = () => {
             onChange={(e) => setSubmission(e.target.value)}
             autoFocus
           ></input>
-          <button onClick={handleSubmit}>Submit</button>
+          <button id="submit-btn" onClick={handleSubmit}>
+            Submit
+          </button>
           {entered && (
             <div id="search-view">
               {searchResults.map((result) => (
