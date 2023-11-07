@@ -16,8 +16,7 @@ const CalmTube = () => {
     }>
   >([]);
 
-  const [darkMode, setDarkMode] = useState(false);
-  const [minimal, setMinimal] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   let API_KEY = import.meta.env.VITE_API_KEY;
 
@@ -89,20 +88,17 @@ const CalmTube = () => {
   const toggleMode = (type: string) => {
     let setFunc = setDarkMode;
     let state_var = darkMode;
-    if (type == "minimal") {
-      setFunc = setMinimal;
-      state_var = minimal;
-    }
-    if (state_var) {
-      setFunc(false);
-    } else {
-      setFunc(true);
+    if (type == "color") {
+      if (state_var) {
+        setFunc(false);
+      } else {
+        setFunc(true);
+      }
     }
   };
 
   const handleReset = () => {
     setEntered(false);
-    setMinimal(false);
     setWatching(false);
     setSearchResults([]);
     setVidId("");
@@ -120,18 +116,6 @@ const CalmTube = () => {
         onClick={() => {
           toggleMode("color");
         }}
-      />
-      <i
-        className="bi bi-noise-reduction"
-        title="Minimal Mode"
-        onClick={() => {
-          toggleMode("minimal");
-        }}
-      />
-      <i
-        className="bi bi-highlights"
-        title="Light/Dark Mode"
-        onClick={() => toggleMode("color")}
       />
       {!watching && (
         <div id="submit-view" className={`contain ${entered && "hidden"}`}>
@@ -159,13 +143,12 @@ const CalmTube = () => {
                   key={result.id}
                   onClick={() => handleSelect(result.id)}
                 >
-                  {!minimal && (
-                    <img
-                      id="vid-img"
-                      src={`https://i.ytimg.com/vi/${result.id}/mqdefault.jpg`}
-                    />
-                  )}
-                  <div id="vid-info" className={`${minimal ? "wide" : ""}`}>
+                  <img
+                    id="vid-img"
+                    src={`https://i.ytimg.com/vi/${result.id}/mqdefault.jpg`}
+                  />
+
+                  <div id="vid-info">
                     <div id="vid-title">{result.title}</div>
                     <div id="vid-channel">{result.channel}</div>
                   </div>
@@ -185,7 +168,6 @@ const CalmTube = () => {
               allowFullScreen
             ></iframe>
           </div>
-          
         </div>
       )}
     </div>
