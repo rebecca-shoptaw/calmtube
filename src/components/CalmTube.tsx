@@ -16,7 +16,6 @@ const CalmTube = () => {
     }>
   >([]);
 
-  const [musicView, setMusicView] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [minimal, setMinimal] = useState(false);
 
@@ -31,19 +30,19 @@ const CalmTube = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleURL = () => {
     setEntered(true);
-    setMusicView(false);
-    if (/youtube.com|youtu.be/.test(submission)) {
-      let split_chars = "?v=";
-      if (/youtu.be/.test(submission)) {
-        split_chars = ".be/";
-      }
-      setVidId(submission.split(split_chars)[1].split("&")[0]);
-      setWatching(true);
-    } else {
-      searchTube(API_KEY, submission);
+    let split_chars = "?v=";
+    if (/youtu.be/.test(submission)) {
+      split_chars = ".be/";
     }
+    setVidId(submission.split(split_chars)[1].split("&")[0]);
+    setWatching(true);
+  };
+
+  const handleSearch = () => {
+    setEntered(true);
+    searchTube(API_KEY, submission);
   };
 
   const handleSelect = (id: string) => {
@@ -76,7 +75,7 @@ const CalmTube = () => {
       .catch((err: AxiosError) => {
         if (
           err.code == "OVER_QUERY_LIMIT" ||
-          err.code == "RESOURCE_EXHAUSTE" ||
+          err.code == "RESOURCE_EXHAUSTED" ||
           err.code == "quotaExceeded"
         ) {
           API_KEY = import.meta.env.VITE_BACKUP_API_KEY;
@@ -100,14 +99,6 @@ const CalmTube = () => {
       setFunc(true);
     }
   };
-
-  /*const handleMusic = () => {
-    if (musicView) {
-      setMusicView(false);
-    } else {
-      setMusicView(true);
-    }
-  };*/
 
   const handleReset = () => {
     setEntered(false);
@@ -151,9 +142,15 @@ const CalmTube = () => {
             onChange={(e) => setSubmission(e.target.value)}
             autoFocus
           ></input>
-          <button id="submit-btn" onClick={handleSubmit}>
-            Submit
-          </button>
+          {/youtube.com|youtu.be/.test(submission) ? (
+            <button id="submit-btn" onClick={handleURL}>
+              Visit
+            </button>
+          ) : (
+            <button id="submit-btn" onClick={handleSearch}>
+              Search
+            </button>
+          )}
           {entered && (
             <div id="search-view">
               {searchResults.map((result) => (
@@ -180,21 +177,15 @@ const CalmTube = () => {
       )}
       {watching && (
         <div id="vid-box" className={`contain ${!entered && "hidden"}`}>
-          <div className={`vid-container ${musicView ? "hidden" : ""}`}>
+          <div className="vid-container">
             <iframe
               src={`https://www.youtube.com/embed/${vidId}?modestbranding=1&rel=0&iv_load_policy=3&color=white`}
               title="YouTube video player"
-              className={`${musicView ? "hidden" : ""}`}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
             ></iframe>
           </div>
-          {/*<button
-            onClick={handleMusic}
-            className={`${!musicView ? "deselect" : "selected"}`}
-          >
-            Music Only
-      </button>*/}
+          
         </div>
       )}
     </div>

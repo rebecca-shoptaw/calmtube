@@ -1,33 +1,22 @@
 * {
   font-family: "Courier New", Courier, monospace;
-  transition: opacity 0.75s, background-color 0.75s, color 0.75s,
-    border-color 0.75s, text-decoration-color 0.75s;
+  transition: all 0.75s;
   border-radius: 3px;
 }
 
-@media only screen and (max-width: 750px) {
-  #vid {
-    flex-direction: column;
-    align-items: center;
-    gap: 20px !important;
-  }
-
-  #vid-info {
-    width: 100% !important;
-    text-align: center;
-  }
-}
-
-#page.dark {
-  background-color: #000;
-}
-
-#page.light {
-  background-color: #fff;
+html {
+  scroll-behavior: smooth;
 }
 
 .hidden {
   display: none;
+}
+
+#page .dark {
+  background-color: #000;
+}
+#page .light {
+  background-color: #000;
 }
 
 .contain {
@@ -107,7 +96,7 @@ button {
 }
 
 #vid:hover #vid-title {
-  text-decoration: underline #00000000;
+  text-decoration: underline rgba(0, 0, 0, 0);
 }
 
 #vid-info {
@@ -204,3 +193,17 @@ iframe {
   width: 100%;
   padding-top: 56.25%;
 }
+
+@media only screen and (max-width: 750px) {
+  #vid {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px !important;
+  }
+  #vid-info {
+    width: 100% !important;
+    text-align: center;
+  }
+}
+
+/*# sourceMappingURL=index.css.map */
