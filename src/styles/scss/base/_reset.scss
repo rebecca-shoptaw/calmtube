@@ -1,0 +1,20 @@
+@use '../abstracts/colors' as *;
+
+.light {
+    input {
+        color: $dark-gray;
+       background-color: $black;
+    }
+    .background {
+        
+    }
+}
+
+.dark {
+    .text {
+        color: $light-gray;
+    }
+    .background {
+
+    }
+}

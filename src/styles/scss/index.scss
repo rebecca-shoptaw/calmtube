@@ -1,5 +1,7 @@
+@use './base/reset';
+
 * {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Roboto", Arial, sans-serif;
   transition: all 0.75s;
   border-radius: 3px;
 }
